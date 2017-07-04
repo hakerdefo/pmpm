@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+if [ "$EUID" -ne 0 ]; then
+printf "\033c"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+echo -e '\e[38;5;82m'"You must run \"install_pmpm\" script using \"sudo\""
+echo -e '\e[38;5;82m'"Hint->Hint->Hint --> \"sudo bash ./install_pmpm\""
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+tput sgr0
+exit 1
+fi
+local_user=$(printf '%s\n' "${SUDO_USER:-$USER}")
+local_user_id=$(id -u "$local_user")
+if [ "$local_user_id" -eq 0 ]; then
+printf "\033c"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+echo -e '\e[38;5;82m'"You must run \"install_pmpm\" script using \"sudo\""
+echo -e '\e[38;5;82m'"Running \"install_pmpm\" as \"root\" is not allowed"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+tput sgr0
+exit 1
+fi
+if [ ! -f pmpm.tar.gz ]; then
+printf "\033c"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+echo -e '\e[38;5;82m'"Required archive \"pmpm.tar.gz\" is missing!!!"
+echo -e '\e[38;5;82m'"Can not continue!!! Installation is aborted!"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+tput sgr0
+exit 1
+fi
+type openssl >/dev/null 2>&1 || { printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"A required program dependency \"OpenSSL\" is missing"; echo -e '\e[38;5;82m'"\"OpenSSL\" is available for almost all linux distros."; echo -e '\e[38;5;82m'"Please install \"openssl\" using your package manager."; echo -e '\e[38;5;82m'"Please visit the homepage of \"OpenSSL\" for more info"; echo -e '\e[38;5;82m'"https://www.openssl.org/"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+type perl >/dev/null 2>&1 || { printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"A required program dependency \"Perl\" is missing"; echo -e '\e[38;5;82m'"\"Perl\" is available for almost all linux distros."; echo -e '\e[38;5;82m'"Please install \"perl\" using your package manager."; echo -e '\e[38;5;82m'"Please visit the homepage of \"Perl\" for more info"; echo -e '\e[38;5;82m'"https://www.perl.org/"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+type xsel >/dev/null 2>&1 || { printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"A required program dependency \"XSel\" is missing"; echo -e '\e[38;5;82m'"\"XSel\" is available for almost all linux distros."; echo -e '\e[38;5;82m'"Please install \"xsel\" using your package manager."; echo -e '\e[38;5;82m'"Please visit the homepage of \"XSel\" for more info"; echo -e '\e[38;5;82m'"http://www.vergenet.net/~conrad/software/xsel/"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+type less >/dev/null 2>&1 || { printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"A required program dependency \"less\" is missing"; echo -e '\e[38;5;82m'"\"less\" is available for almost all linux distros."; echo -e '\e[38;5;82m'"Please install \"less\" using your package manager."; echo -e '\e[38;5;82m'"Please visit the homepage of \"less\" for more info"; echo -e '\e[38;5;82m'"http://www.greenwoodsoftware.com/less/"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+type wget >/dev/null 2>&1 || { printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"A required program dependency \"Wget\" is missing"; echo -e '\e[38;5;82m'"\"Wget\" is available for almost all linux distros."; echo -e '\e[38;5;82m'"Please install \"wget\" using your package manager."; echo -e '\e[38;5;82m'"Please visit the homepage of \"Wget\" for more info"; echo -e '\e[38;5;82m'"https://www.gnu.org/software/wget/"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+type gcc >/dev/null 2>&1 || { printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"A required program dependency \"GCC\" is missing"; echo -e '\e[38;5;82m'"\"GCC\" is available for almost all linux distros."; echo -e '\e[38;5;82m'"Please install \"gcc\" using your package manager."; echo -e '\e[38;5;82m'"Please visit the homepage of \"GCC\" for more info"; echo -e '\e[38;5;82m'"https://gcc.gnu.org/"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+if type cracklib-check >/dev/null 2>&1; then
+pmcrch=$(which cracklib-check)
+pmcrfo=$(which cracklib-format)
+pmcrpa=$(which cracklib-packer)
+pmcrun=$(which cracklib-unpacker)
+pmcrcr=$(which create-cracklib-dict)
+pmupcr=$(which update-cracklib)
+sudo -u "$local_user" test -x "$pmcrch" >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+test -d "/usr/local/bin" || mkdir -p "/usr/local/bin"
+ln -sf "$pmcrch" "/usr/local/bin/cracklib-check"
+ln -sf "$pmcrfo" "/usr/local/bin/cracklib-format"
+ln -sf "$pmcrpa" "/usr/local/bin/cracklib-packer"
+ln -sf "$pmcrun" "/usr/local/bin/cracklib-unpacker"
+ln -sf "$pmcrcr" "/usr/local/bin/create-cracklib-dict"
+ln -sf "$pmupcr" "/usr/local/bin/update-cracklib"
+fi
+else
+printf "\033c"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+echo -e '\e[38;5;82m'"A required program dependency \"cracklib-check\" is missing."
+echo -e '\e[38;5;82m'"\"cracklib-check\" is packaged for almost all linux distros."
+echo -e '\e[38;5;82m'"Install package \"cracklib-runtime\" on Debian-Ubuntu family."
+echo -e '\e[38;5;82m'"Install package \"cracklib\" on Arch, CentOS, Fedora, Mageia,"
+echo -e '\e[38;5;82m'"openSUSE, PCLinuxOS, PuppyLinux, RedHat, Slackware etcetera."
+echo -e '\e[38;5;82m'"Please visit the GitHub page of \"cracklib\" for further info,"
+echo -e '\e[38;5;82m'"https://github.com/cracklib/cracklib"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+tput sgr0
+exit 1
+fi
+work_dir=$(mktemp -d)
+pmpm_rm=$(which rm)
+pmpm_cp=$(which cp)
+tar -xzf pmpm.tar.gz --directory "$work_dir"
+cd "$work_dir" || { "$pmpm_rm" -rf "$work_dir"; "$pmpm_rm" -f /usr/local/bin/cracklib-check; "$pmpm_rm" -f /usr/local/bin/cracklib-format; "$pmpm_rm" -f /usr/local/bin/cracklib-packer; "$pmpm_rm" -f /usr/local/bin/cracklib-unpacker; "$pmpm_rm" -f /usr/local/bin/create-cracklib-dict; "$pmpm_rm" -f /usr/local/bin/update-cracklib; printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"Something  went wrong!!! Aborted!!!"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+make >/dev/null 2>&1 || { cd "$HOME"; "$pmpm_rm" -rf "$work_dir"; "$pmpm_rm" -f /usr/local/bin/cracklib-check; "$pmpm_rm" -f /usr/local/bin/cracklib-format; "$pmpm_rm" -f /usr/local/bin/cracklib-packer; "$pmpm_rm" -f /usr/local/bin/cracklib-unpacker; "$pmpm_rm" -f /usr/local/bin/create-cracklib-dict; "$pmpm_rm" -f /usr/local/bin/update-cracklib; printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; echo -e '\e[38;5;82m'"Something  went wrong!!! Aborted!!!"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+"$pmpm_cp" pmpm "/usr/local/bin"
+"$pmpm_cp" base91 "/usr/local/bin/pmba91"
+test -d "/usr/share/dict" || mkdir -p "/usr/share/dict"
+"$pmpm_cp" cracklib_words "/usr/share/dict"
+chmod 755 "/usr/local/bin/pmpm"
+chmod 555 "/usr/local/bin/pmba91"
+chmod 644 "/usr/share/dict/cracklib_words"
+cd "$HOME" || { "$pmpm_rm" -rf "$work_dir"; "$pmpm_rm" -f /usr/local/bin/pmpm; "$pmpm_rm" -f /usr/local/bin/pmba91; "$pmpm_rm" -f /usr/share/dict/cracklib_words; "$pmpm_rm" -f /usr/local/bin/cracklib-check; "$pmpm_rm" -f /usr/local/bin/cracklib-format; "$pmpm_rm" -f /usr/local/bin/cracklib-packer; "$pmpm_rm" -f /usr/local/bin/cracklib-unpacker; "$pmpm_rm" -f /usr/local/bin/create-cracklib-dict; "$pmpm_rm" -f /usr/local/bin/update-cracklib; printf "\033c"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e '\e[38;5;82m'"Something  went wrong!!! Aborted!!!"; echo -e ""; for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; echo -e ""; tput sgr0; exit 1; }
+printf "\033c"
+create-cracklib-dict "/usr/share/dict/*"
+printf "\033c"
+if test -d "/usr/dict"; then
+create-cracklib-dict "/usr/dict/*"
+fi
+printf "\033c"
+update-cracklib
+"$pmpm_rm" -rf "$work_dir"
+printf "\033c"
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+echo -e '\e[38;5;82m'"Installation of \"pmpm\" is successfull!!!"
+echo -e '\e[38;5;82m'"You can launch \"pmpm\" by running \"pmpm\","
+echo -e '\e[38;5;82m'"command from a terminal emulator or tty."
+echo -e ""
+{ for i in {16..51} {51..16}; do echo -en "\e[38;5;${i}m#\e[0m"; done; echo; }
+echo -e ""
+tput sgr0
+exit 0
